@@ -158,9 +158,9 @@ export default {
     },
     getCleanContent(content) {
       return content
-        .replace(/<span class='ipsType_reset.*?<\/span>/gms, "")
+        .replace(/<span class='ipsType_reset[^]*?<\/span>/gm, "")
         .replace(
-          /img(.*?)data-src="(.*?)"(.*?)src=".*?"/gms,
+          /img([^]*?)data-src="([^]*?)"([^]*?)src="[^]*?"/gm,
           'img$1 $3 src="$2"'
         )
         .replaceAll(
