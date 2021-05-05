@@ -39,32 +39,37 @@
 
     <p
       class="w-full border-b p-2 bg-yellow-300 rounded-t-md text-3xl shadow-sm"
-    >
-      {{ title }}
-    </p>
+      v-html="title"
+    ></p>
 
     <section
       class="text-gray-600 body-font overflow-hidden bg-white shadow-lg rounded-b-md"
     >
-      <div class="px-6">
+      <div class="md:px-6 px-2">
         <div class="divide-y-2 divide-gray-100">
           <div
-            class="flex flex-wrap md:flex-nowrap py-4"
+            class="flex flex-wrap md:flex-nowrap pb-4 md:py-4"
             v-for="post in getCurrentPagePosts()"
             :key="post.id"
             :id="post.id"
           >
             <div
-              class="md:w-56 md:mb-0 mb-6 flex-shrink-0 flex flex-col w-full text-center"
+              class="md:w-56 mb-2 md:mb-6 flex-shrink-0 flex flex-col w-full text-center"
             >
-              <p class="text-xl font-bold mb-2">{{ post.author }}</p>
+              <p class="text-xl font-bold my-2 md:my-4">{{ post.author }}</p>
               <p class="text-gray-500 text-xs">{{ post.registrationDate }}</p>
               <p class="text-gray-500 text-xs">
                 {{ post.numMessages }} mensajes
               </p>
             </div>
             <div class="md:flex-grow md:border-l md:pl-4 md:border-gray-600">
-              <p class="leading-relaxed" v-html="post.content"></p>
+              <p class="text-xs text-gray-500">
+                {{ post.publicationDate.replace("T", " ").replace("Z", "") }}
+              </p>
+              <p
+                class="leading-relaxed"
+                v-html="getCleanContent(post.content)"
+              ></p>
             </div>
           </div>
         </div>
@@ -108,8 +113,6 @@
 </template>
 
 <script>
-// TODO
-// Paginación
 const POSTS_PER_PAGE = 15;
 const PAGES_PER_CHUNK = 100;
 
@@ -135,7 +138,7 @@ export default {
       const pos = POSTS_PER_PAGE * (this.currentPage - 1);
       return this.thread[String(chunk)].posts.slice(pos, pos + POSTS_PER_PAGE);
     },
-    getChunk(threadId) {
+    getChunk() {
       const chunk = Math.floor(this.currentPage / PAGES_PER_CHUNK) + 1;
 
       if (!this.chunks.includes(chunk)) {
@@ -153,13 +156,26 @@ export default {
           });
       }
     },
+    getCleanContent(content) {
+      return content
+        .replace(/<span class='ipsType_reset.*?<\/span>/gms, "")
+        .replace(
+          /img(.*?)data-src="(.*?)"(.*?)src=".*?"/gms,
+          'img$1 $3 src="$2"'
+        )
+        .replaceAll(
+          "http://meristation.as.com/zonaforo/uploads/emoticons/default_",
+          "/emojis/"
+        );
+    },
   },
   watch: {
     $route: {
       immediate: true,
       handler(to, from) {
         this.currentPage = parseInt(to.params.page);
-        //this.getChunk()
+        this.threadId = to.params.thread;
+        this.getChunk();
       },
     },
   },
@@ -167,11 +183,30 @@ export default {
 </script>
 
 <style>
-.bbc_emoticon {
+.bbc_emoticon,
+img[data-emoticon] {
   display: inline;
 }
-a.bbc_url {
+a.bbc_url,
+a[ipsnoembed],
+a[rel="external nofollow"] {
   @apply text-blue-500;
   @apply underline;
+}
+blockquote {
+  @apply bg-gray-100;
+  @apply border-gray-200;
+  @apply rounded-md;
+  @apply p-2;
+  @apply text-sm;
+}
+
+div.ipsQuote_citation {
+  @apply font-bold;
+  @apply text-xs;
+}
+
+div.ipsQuote_contents {
+  @apply px-2;
 }
 </style>

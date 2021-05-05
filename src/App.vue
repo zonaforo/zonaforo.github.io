@@ -12,7 +12,7 @@
           <span class="ml-3 text-xl">ZonaForo MeriStation</span>
         </a>
         <nav
-          class="mr-auto ml-4 py-1 pl-4 border-l border-gray-400 flex flex-wrap items-center text-base justify-center"
+          class="hidden sm:flex mr-auto ml-4 py-1 pl-4 border-l border-gray-400 flex-wrap items-center text-base justify-center"
         >
           <span>In Memoriam</span>
         </nav>

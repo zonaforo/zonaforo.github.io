@@ -3,14 +3,10 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
-      colors: {
-        meriblue: "",
-        meriorange: ""
-      }
     },
   },
   variants: {
-    extend: {},
+    extend: { opacity: ['disabled'] },
   },
   plugins: [],
 }

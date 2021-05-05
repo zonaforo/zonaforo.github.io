@@ -2,7 +2,7 @@
   <div class="xl:container mx-2 xl:mx-auto">
     <div class="flex flex-wrap text-center mb-4 justify-around w-full">
       <input
-        class="w-1/2 border border-gray-400 shadow-md py-1 px-2 rounded-md"
+        class="w-full sm:w-1/2 border border-gray-400 shadow-md py-1 px-2 rounded-md"
         v-model="searchTerm"
         placeholder="Búsqueda por título o autor..."
       />
@@ -57,7 +57,7 @@
           <td class="px-4 py-4 whitespace-nowrap">
             {{ thread.author }}
           </td>
-          <td class="px-4 py-4 whitespace-nowrap">
+          <td class=" hidden md:block px-4 py-4 whitespace-nowrap">
             {{ thread.publicationDate.replace("T", " ").replace("Z", "") }}
           </td>
           <td class="px-4 py-4 whitespace-nowrap">
