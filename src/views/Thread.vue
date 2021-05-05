@@ -133,13 +133,16 @@ export default {
     this.getChunk();
   },
   methods: {
+    getChunkNo() {
+      return Math.floor((this.currentPage - 1) / PAGES_PER_CHUNK) + 1;
+    },
     getCurrentPagePosts() {
-      const chunk = Math.floor(this.currentPage / PAGES_PER_CHUNK) + 1;
-      const pos = POSTS_PER_PAGE * (this.currentPage - 1);
+      const chunk = this.getChunkNo();
+      const pos = POSTS_PER_PAGE * ((this.currentPage - 1) % PAGES_PER_CHUNK);
       return this.thread[String(chunk)].posts.slice(pos, pos + POSTS_PER_PAGE);
     },
     getChunk() {
-      const chunk = Math.floor(this.currentPage / PAGES_PER_CHUNK) + 1;
+      const chunk = this.getChunkNo();
 
       if (!this.chunks.includes(chunk)) {
         fetch(`/api/${this.threadId}/chunk-${chunk}.json`)
