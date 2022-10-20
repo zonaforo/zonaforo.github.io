@@ -12,7 +12,7 @@
           <span>In Memoriam</span>
         </nav>
 
-        <nav class=" mr-2 py-1 px-2  flex-wrap items-center text-base justify-center bg-yellow-500 text-white font-semibold rounded-md shadow-md text-center">
+        <nav class=" mr-2 py-1 px-2  flex-wrap items-center text-base justify-center bg-yellow-500 text-white rounded-md shadow-md hover:shadow-lg text-center">
           <router-link :to="`/users`" class="text-center"> Usuarios </router-link>
         </nav>
       </div>

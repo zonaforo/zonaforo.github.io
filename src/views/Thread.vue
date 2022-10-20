@@ -55,6 +55,7 @@
           >
             <div
               class="md:w-56 mb-2 md:mb-6 flex-shrink-0 flex flex-col w-full text-center"
+              
             >
               <p class="text-xl font-bold my-2 md:my-4">{{ post.author }}</p>
               <p class="text-gray-500 text-xs">{{ post.registrationDate }}</p>

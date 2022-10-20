@@ -84,7 +84,7 @@
 
     <div class="flex flex-wrap">
       <div v-for="user in showUsers()" :key="user.name" class="w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/6">
-        <div class="py-2 m-2 shadow-md border border-gray-200 rounded-md text-center bg-white">
+        <div class="py-2 m-2 shadow-md border border-gray-200 rounded-md text-center bg-white cursor-pointer hover:shadow-lg" @click="goToUser(user.name)">
           <p class="text-2xl text-clip">{{ user.name }}</p>
           <p class="text-sm">{{ user.date }}</p>
           <p class="text-sm">{{ user.messages }}</p>
@@ -121,6 +121,21 @@ export default {
     },
     showUsers() {
       return this.filteredUsers().slice((this.currentPage - 1) * PAGE_SIZE, this.currentPage * PAGE_SIZE)
+    },
+    goToUser(userName) {
+      this.$router.push(`/user/${this.hashCode(userName)}`)
+    },
+    hashCode(str) {
+      var hash = 0,
+        i,
+        chr
+      if (str.length === 0) return hash
+      for (i = 0; i < str.length; i++) {
+        chr = str.charCodeAt(i)
+        hash = (hash << 5) - hash + chr
+        hash |= 0 // Convert to 32bit integer
+      }
+      return hash
     }
   },
   watch: {
