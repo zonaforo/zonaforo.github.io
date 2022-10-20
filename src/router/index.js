@@ -1,6 +1,7 @@
 import { createWebHistory, createRouter } from "vue-router";
 import Home from "../views/Home.vue";
 import Thread from "../views/Thread.vue"
+import Users from "../views/Users.vue"
 
 const routes = [
   {
@@ -12,6 +13,10 @@ const routes = [
     path: "/thread/:thread/:page",
     name: "Hilo",
     component: Thread
+  },{
+    path: "/users",
+    name: "Usuarios",
+    component: Users
   }
 ];
 
